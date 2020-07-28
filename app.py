@@ -215,11 +215,11 @@ app.layout = html.Div(
                     dbc.Row(
                         html.Div(
                             [
-                                html.Div(
-                                    [html.P(id="summary"),],
-                                    id="Summary_container",
-                                    className="summary_mini_container",
-                                ),
+                                #html.Div(
+                                #    [html.P(id="summary"),],
+                                #    id="Summary_container",
+                                #    className="summary_mini_container",
+                                #),
                                 html.Div(
                                     [html.H6(id="totalCases"), html.P("Total Cases")],
                                     id="tc",
@@ -292,7 +292,7 @@ def update_text(metric_types, country_selected, date_slider):
     new_cases = data['new_cases'].values[-1]
     new_deaths = data['new_deaths'].values[-1]
 
-    return [location + ":       " + dates, \
+    return [ \
             "{:,d}".format(int(total_cases)), \
             "{:,d}".format(int(total_deaths)), \
             "{:,d}".format(int(new_cases)), \
@@ -301,7 +301,6 @@ def update_text(metric_types, country_selected, date_slider):
 
 @app.callback(
     [
-        Output("summary", "children"),
         Output("totalCases", "children"),
         Output("totalDeaths", "children"),
         Output("newCases", "children"),
@@ -310,7 +309,7 @@ def update_text(metric_types, country_selected, date_slider):
     [Input("aggregate_data", "data")],
 )
 def update_text(data):
-    return data[0], data[1], data[2], data[3], data[4]
+    return data[0], data[1], data[2], data[3]
 
 
 # Selectors -> count graph
