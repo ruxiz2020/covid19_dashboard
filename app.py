@@ -9,6 +9,7 @@ import pandas as pd
 from dash.dependencies import Input, Output, State, ClientsideFunction
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 
 # Multi-dropdown options
 from controls import COUNTRIES, METRIC_TYPES, COLORS
@@ -23,8 +24,11 @@ df["date"] = pd.to_datetime(df["date"])
 df = df[df["date"] >= dt.datetime(2019, 12, 1)]
 
 app = dash.Dash(
-    __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
+    __name__,
+    meta_tags=[{"name": "viewport",
+    "content": "width=device-width, initial-scale=1"}]
 )
+
 #app.config['suppress_callback_exceptions']=True
 server = app.server
 
@@ -152,6 +156,7 @@ app.layout = html.Div(
         ), # End of title row
         html.Div(
             [
+
                 html.Div( # Start of control panel top left side
                     [
                         html.H5("Control Panel"),
@@ -204,12 +209,14 @@ app.layout = html.Div(
                     className="pretty_container four columns",
                     id="cross-filter-options",
                 ), # End of control panel top left side
+
                 html.Div( # Start of main plot top right side
                     [
+                    dbc.Row(
                         html.Div(
                             [
                                 html.Div(
-                                    [html.H6(id="summary"),],
+                                    [html.P(id="summary"),],
                                     id="Summary_container",
                                     className="summary_mini_container",
                                 ),
@@ -237,8 +244,9 @@ app.layout = html.Div(
                             id="info-container",
                             className="row container-display",
                         ),
+                        ),
                         html.Div(
-                            [dcc.Graph(id="count_graph")],
+                            [dcc.Graph(id="count_graph", config = {'displayModeBar' : False})],
                             id="countGraphContainer",
                             className="pretty_container",
                         ),
@@ -285,10 +293,10 @@ def update_text(metric_types, country_selected, date_slider):
     new_deaths = data['new_deaths'].values[-1]
 
     return [location + ":       " + dates, \
-            str(int(total_cases)), \
-            str(int(total_deaths)), \
-            str(int(new_cases)), \
-            str(int(new_deaths))]
+            "{:,d}".format(int(total_cases)), \
+            "{:,d}".format(int(total_deaths)), \
+            "{:,d}".format(int(new_cases)), \
+            "{:,d}".format(int(new_deaths))]
 
 
 @app.callback(
