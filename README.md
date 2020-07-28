@@ -32,7 +32,5 @@ Open a browser at http://127.0.0.1:8050
 ```bash
 heroku create covid19-dashboard-simple
 
-git remote add heroku  text-toolkit
-
 git push heroku master
 ```
