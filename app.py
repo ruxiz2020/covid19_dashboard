@@ -263,7 +263,7 @@ app.layout = html.Div(
         html.Div(
             [
                 html.Div(
-                    [dcc.Graph(id="main_graph", config = {'displayModeBar' : False})],
+                    [dcc.Graph(id="main_graph")],
                     className="pretty_container fifteen columns",
                 ),
             ],
