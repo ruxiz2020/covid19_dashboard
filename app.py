@@ -26,6 +26,9 @@ df = pd.read_csv(DATA_PATH.joinpath("owid-covid-data.csv"),
 df["date"] = pd.to_datetime(df["date"])
 df = df[df["date"] >= dt.datetime(2019, 12, 1)]
 
+df["new_cases"] = df['new_cases'].abs()
+df["new_deaths"] = df['new_deaths'].abs()
+
 app = dash.Dash(
     __name__,
     meta_tags=[{"name": "viewport",
