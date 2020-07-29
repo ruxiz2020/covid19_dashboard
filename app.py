@@ -261,7 +261,7 @@ app.layout = html.Div(
         html.Div(
             [
                 html.Div(
-                    [dcc.Graph(id="main_graph")],
+                    [dcc.Graph(id="main_graph", config = {'displayModeBar' : False})],
                     className="pretty_container fifteen columns",
                 ),
             ],
@@ -384,6 +384,7 @@ def make_main_figure(metric_types):
     #data = filter_dataframe(df, metric_types, country_selected, date_slider)
 
     last_day = df['date'].max()
+    #start_date = (pd.to_datetime(last_day) - dt.timedelta(days=20)).strftime("%Y-%m-%d")
     sdf = df[(df['date']==last_day) & (~df['continent'].isnull())]
     sdf.fillna(0, inplace=True)
 
@@ -395,8 +396,9 @@ def make_main_figure(metric_types):
                     size="total_cases",
                     opacity=0.7,
                     title="Total cases by countries",
-                    projection="robinson",
                     )
+    fig.update_layout(
+        margin=dict(l=20, r=10, t=40, b=20))
     return fig
 
 # Main
