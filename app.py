@@ -20,7 +20,9 @@ PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("data").resolve()
 
 # Load data
-df = pd.read_csv(DATA_PATH.joinpath("owid-covid-data.csv"), low_memory=False)
+df = pd.read_csv(DATA_PATH.joinpath("owid-covid-data.csv"),
+                low_memory=False,
+                compression="gzip")
 df["date"] = pd.to_datetime(df["date"])
 df = df[df["date"] >= dt.datetime(2019, 12, 1)]
 
@@ -402,9 +404,9 @@ def make_main_figure(metric_types):
         legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=0.01,
+            y=0.005,
             xanchor="left",
-            x=0.1
+            x=0.2
             )
         )
     return fig
