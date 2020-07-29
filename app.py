@@ -332,7 +332,7 @@ def make_count_figure(metric_types, country_selected, date_slider):
         if i >= int(date_slider[0]) and i <= int(date_slider[1]):
             colors.append("rgb(123, 199, 255)")
         else:
-            colors.append("rgba(123, 199, 255, 0.2)")
+            colors.append("#FA9FB5")
 
     data = [
         dict(
