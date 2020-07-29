@@ -395,9 +395,9 @@ def make_main_figure(metric_types):
                     locations="iso_code",
                     color="continent",
                     hover_name="location",
-                    size="total_cases",
+                    size=metric_types,
                     opacity=0.7,
-                    title="Total cases by countries",
+                    title="Global " + {v:k for k, v in METRIC_TYPES.items()}[metric_types],
                     )
     fig.update_layout(
         margin=dict(l=5, r=5, t=45, b=15),
