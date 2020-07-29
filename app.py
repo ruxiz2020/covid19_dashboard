@@ -398,13 +398,13 @@ def make_main_figure(metric_types):
                     title="Total cases by countries",
                     )
     fig.update_layout(
-        margin=dict(l=20, r=10, t=45, b=20),
+        margin=dict(l=5, r=5, t=45, b=15),
         legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.0,
-            xanchor="right",
-            x=1
+            y=0.01,
+            xanchor="left",
+            x=0.1
             )
         )
     return fig
