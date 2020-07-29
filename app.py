@@ -10,6 +10,7 @@ from dash.dependencies import Input, Output, State, ClientsideFunction
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+import plotly.express as px
 
 # Multi-dropdown options
 from controls import COUNTRIES, METRIC_TYPES, COLORS
@@ -154,7 +155,7 @@ app.layout = html.Div(
             className="row flex-display",
             style={"margin-bottom": "25px"},
         ), # End of title row
-        html.Div(
+        html.Div( # start of first row of control panal + main plot
             [
 
                 html.Div( # Start of control panel top left side
@@ -256,8 +257,16 @@ app.layout = html.Div(
                 ), # End of main plot top right side
             ],
             className="row flex-display",
+        ), # end of first row of control panal + main plot
+        html.Div(
+            [
+                html.Div(
+                    [dcc.Graph(id="main_graph")],
+                    className="pretty_container fifteen columns",
+                ),
+            ],
+            className="row flex-display",
         ),
-
     ],
     id="mainContainer",
     style={"display": "flex", "flex-direction": "column"},
@@ -362,6 +371,33 @@ def make_count_figure(metric_types, country_selected, date_slider):
     figure = dict(data=data, layout=layout_count)
     return figure
 
+
+# Selectors -> main graph
+@app.callback(
+    Output("main_graph", "figure"),
+    [
+        Input("metric_type_selector", "value"),
+    ],
+)
+def make_main_figure(metric_types):
+
+    #data = filter_dataframe(df, metric_types, country_selected, date_slider)
+
+    last_day = df['date'].max()
+    sdf = df[(df['date']==last_day) & (~df['continent'].isnull())]
+    sdf.fillna(0, inplace=True)
+
+    #df = px.data.gapminder().query("year==2007")
+    fig = px.scatter_geo(sdf,
+                    locations="iso_code",
+                    color="continent",
+                    hover_name="location",
+                    size="total_cases",
+                    opacity=0.7,
+                    title="Total cases by countries",
+                    projection="robinson",
+                    )
+    return fig
 
 # Main
 if __name__ == "__main__":
