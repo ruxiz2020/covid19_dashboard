@@ -1,4 +1,4 @@
-# ovid19_dashboard
+# Covid19_dashboard
 
 ## website can be viewed here
 
